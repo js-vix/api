@@ -2,13 +2,18 @@
   "name": "api",
   "scripts": {
     "dev": "wrangler dev src/index.ts",
-    "deploy": "wrangler deploy --minify src/index.ts"
+    "deploy": "wrangler deploy --minify src/index.ts",
+    "tail": "wrangler tail"
   },
   "dependencies": {
-    "hono": "^4.4.7"
+    "@libsql/client": "^0.6.2",
+    "@libsql/kysely-libsql": "^0.3.0",
+    "hono": "^4.4.7",
+    "kysely": "^0.27.3"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20240529.0",
+    "@types/node": "^20.14.8",
     "wrangler": "^3.57.2"
   }
 }

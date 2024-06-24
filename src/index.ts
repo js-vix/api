@@ -1,9 +1,19 @@
-import { Hono } from 'hono'
+import { Hono } from "hono";
+import KyselyMiddleware from "./middlewares/kysely.middleware";
 
-const app = new Hono()
+type Bindings = {
+  TURSO_DB_URL: string;
+  TURSO_DB_AUTH_TOKEN: string;
+};
 
-app.get('/', (c) => {
-  return c.text('Hello Hono!')
-})
+const app = new Hono<{ Bindings: Bindings }>();
 
-export default app
+app.use(KyselyMiddleware);
+
+app.get("/editions", async (c) =>
+  c.json({
+    ...(await (c.get("appDB")).selectFrom("editions").selectAll().executeTakeFirst()),
+  })
+);
+
+export default app;
