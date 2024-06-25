@@ -18,12 +18,11 @@ export interface Database {
 }
 
 export interface EditionsTable {
-  id: Generated<number>
+  id?: Generated<number>
   name: string
-  scheduled_date: ColumnType<Date>
   tickets: number
   location: string
-  created_at: ColumnType<Date, string | undefined, never>
+  created_at?: ColumnType<Date, string | undefined, never>
 }
 
 export interface UsersTable {

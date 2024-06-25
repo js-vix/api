@@ -1,5 +1,7 @@
 import { Hono } from "hono";
+import { logger } from 'hono/logger'
 import KyselyMiddleware from "./middlewares/kysely.middleware";
+import editions from "./routes/editions";
 
 type Bindings = {
   TURSO_DB_URL: string;
@@ -9,11 +11,8 @@ type Bindings = {
 const app = new Hono<{ Bindings: Bindings }>();
 
 app.use(KyselyMiddleware);
+app.use(logger());
 
-app.get("/editions", async (c) =>
-  c.json({
-    ...(await (c.get("appDB")).selectFrom("editions").selectAll().executeTakeFirst()),
-  })
-);
+app.route('editions', editions)
 
 export default app;
